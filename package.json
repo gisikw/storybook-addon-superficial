@@ -2,7 +2,6 @@
   "name": "storybook-addon-superficial",
   "version": "0.1.0",
   "description": "A React Storybook addon for interacting with responsive Superficial looks.",
-  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gisikw/storybook-addon-superficial.git"
@@ -12,7 +11,7 @@
   "scripts": {
     "test": "babel-tap test/**/*.js",
     "test:coverage": "babel-tap --cov --coverage-report=lcov test/**/*.js",
-    "build": "babel src --presets babel-preset-es2015 --out-dir dist",
+    "build": "babel src --presets babel-preset-es2015 --out-dir .",
     "prepublish": "npm run build",
     "lint": "eslint src test"
   },
