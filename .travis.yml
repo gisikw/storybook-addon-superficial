@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "4.2"
+  - "5.0"
+script:
+  - npm run lint
+  - npm run test:coverage
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < coverage/lcov.info
+addons:
+  code_climate:
+    repo_token: 433b1c8cba389b529e1cdd288a2ca21e8b0227b2cb7c243620d1bdc66c38d647
