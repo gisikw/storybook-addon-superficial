@@ -31,7 +31,7 @@ class SuperficialPanel extends React.Component {
 }
 
 SuperficialPanel.propTypes = {
-  channel: React.PropTypes.ObjectWithShapes({
+  channel: React.PropTypes.ObjectWithShape({
     emit: React.PropTypes.func,
   }),
 };
