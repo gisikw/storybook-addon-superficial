@@ -28,9 +28,12 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1",
-    "react": "^15.4.1",
     "react-addons-test-utils": "^15.4.1",
-    "react-dom": "^15.4.1",
     "tape": "^4.6.3"
+  },
+  "peerDependencies": {
+    "@kadira/storybook-addons": "^1.6.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
   }
 }
