@@ -4,7 +4,7 @@ import SuperficialPanel from './components/SuperficialPanel';
 
 const ADDON_ID = 'gisikw/superficial';
 const PANEL_NAME = 'gisikw/superficial/panel';
-const PANEL_TITLE = 'Superficial';
+const PANEL_TITLE = 'Looks';
 
 addons.register(ADDON_ID, (api) => {
   addons.addPanel(PANEL_NAME, {

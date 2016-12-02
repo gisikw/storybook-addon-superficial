@@ -5,6 +5,7 @@ import { RESIZE_EVENT, DEFINE_EVENT } from './constants';
 export default class SuperficialView extends React.Component {
   constructor() {
     super();
+    this.state = { width: 400 };
     this.channel = addons.getChannel();
     this.handleResize = this.handleResize.bind(this);
   }
@@ -14,7 +15,7 @@ export default class SuperficialView extends React.Component {
     this.channel.emit(DEFINE_EVENT, {
       min: 0,
       max: 1000,
-      styles: this.props.children.looks,
+      looks: this.props.children.type.prototype.looks,
     });
   }
 
