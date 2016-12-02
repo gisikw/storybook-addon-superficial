@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/gisikw/storybook-addon-superficial.svg?branch=master)](https://travis-ci.org/gisikw/storybook-addon-superficial)
 [![Test Coverage](https://codeclimate.com/github/gisikw/storybook-addon-superficial/badges/coverage.svg)](https://codeclimate.com/github/gisikw/storybook-addon-superficial/coverage)
 [![Code Climate](https://codeclimate.com/github/gisikw/storybook-addon-superficial/badges/gpa.svg)](https://codeclimate.com/github/gisikw/storybook-addon-superficial)
+[![NPM Version](https://img.shields.io/npm/v/storybook-addon-superficial.svg)](https://www.npmjs.com/package/storybook-addon-superficial)
 
 # React Storybook Superficial Addon
 
