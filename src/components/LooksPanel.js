@@ -1,18 +1,18 @@
 import React from 'react';
+import LookSection from './LookSection';
+import StyledInput from './StyledInput';
 import { RESIZE_EVENT, DEFINE_EVENT, DEFAULT_WIDTH, DEFAULT_MAX_WIDTH,
          DEFAULT_MIN_WIDTH } from '../constants';
 
-const colors = [];
-const getColor = i => colors[i] || (colors[i] =
-  `#${`000000${Math.random().toString(16).slice(2, 8)}`.slice(-6)}`);
-
 const styles = {
-  label: {
-    textTransform: 'uppercase',
-    fontSize: '10px',
-    color: '#444',
+  container: { margin: 10, width: '100%' },
+  table: { width: '100%' },
+  rightCol: { width: '80%' },
+  leftCol: {
+    width: '20%',
     fontFamily: 'Arial',
     fontWeight: '600',
+    fontSize: '13px',
   },
 };
 
@@ -26,17 +26,7 @@ class LooksPanel extends React.Component {
       looks: {},
     };
     this.forceResize = this.forceResize.bind(this);
-    this.props.channel.on(DEFINE_EVENT, ({ min, max, width, looks }) => {
-      this.setState({ min, max, width, looks });
-    });
-  }
-
-  getPercent(n) {
-    return `${
-      ((n - this.state.min) /
-      (this.state.max - this.state.min))
-      * 100
-    }%`;
+    this.props.channel.on(DEFINE_EVENT, opts => this.setState(opts));
   }
 
   forceResize({ target }) {
@@ -45,93 +35,28 @@ class LooksPanel extends React.Component {
     this.setState({ width });
   }
 
-  styleSection(key) {
-    const props = expandStyles(this.state.looks[key]);
-    return (
-      <tbody key={key} style={styles.label}>
-        <tr>
-          <td
-            style={{
-              borderBottom: '1px solid #ccc',
-              borderTop: '10px solid transparent',
-            }}
-          >
-            { key }
-          </td>
-        </tr>
-        { Object.keys(props).map(prop => this.styleRow(prop, props[prop])) }
-      </tbody>
-    );
-  }
-
-  styleRow(prop, value) {
-    if (typeof value !== 'object') {
-      return <tr key={prop}><td>{ prop }</td><td>{ value }</td></tr>;
-    }
-    const keys = Object.keys(value).sort((a, b) => a - b);
-    const min = keys[0];
-    const max = keys[keys.length - 1];
-    return (
-      <tr key={prop}>
-        <td>{ prop }</td>
-        <td style={{ position: 'relative' }}>
-          <div
-            style={{
-              position: 'absolute',
-              left: this.getPercent(min),
-              right: `${100 - parseFloat(this.getPercent(max))}%`,
-              top: '50%',
-              marginTop: '-1px',
-              height: '2px',
-              background: getColor(prop),
-            }}
-          />
-          {
-            keys.map(key => (
-              <div
-                key={key}
-                title={`${key}px: ${value[key]}`}
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  marginTop: '-3px',
-                  height: '6px',
-                  width: '6px',
-                  background: 'black',
-                  left: this.getPercent(key),
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                }}
-              />
-            ))
-          }
-        </td>
-      </tr>
-    );
-  }
-
-
   render() {
-    const looks = Object.keys(this.state.looks);
+    const { looks, min, max, width } = this.state;
+    const inputArgs = { onChange: this.forceResize, value: width, min, max };
     return (
-      <div style={{ margin: 10, width: '100%' }}>
-        <table style={{ width: '100%' }}>
+      <div style={styles.container}>
+        <table style={styles.table}>
           <tbody>
             <tr>
-              <td style={{ width: '20%' }} />
-              <td style={{ width: '80%' }}>
-                <input
-                  type="range"
-                  style={{ width: '100%' }}
-                  min={this.state.min}
-                  max={this.state.max}
-                  onChange={this.forceResize}
-                  value={this.state.width}
-                />
+              <td style={styles.leftCol}>WIDTH</td>
+              <td style={styles.rightCol}>
+                <StyledInput {...inputArgs} />
               </td>
             </tr>
           </tbody>
-          { looks.map(look => this.styleSection(look)) }
+          {
+            Object.keys(looks).map(title =>
+              <LookSection
+                key={title}
+                {...{ looks: looks[title], title, min, max }}
+              />,
+            )
+          }
         </table>
       </div>
     );
@@ -144,23 +69,5 @@ LooksPanel.propTypes = {
     on: React.PropTypes.func,
   }),
 };
-
-const isNumeric = s => !isNaN(parseFloat(s)) && isFinite(s);
-
-// Split out grouped breakpoint rules into individual properties
-function expandStyles(rules) {
-  return Object.keys(rules).reduce((o, key) => {
-    if (isNumeric(key)) {
-      return Object.assign({}, o,
-        ...Object.keys(rules[key]).map(prop => ({
-          [prop]: Object.assign({}, o[prop], {
-            [key]: rules[key][prop],
-          }),
-        })),
-      );
-    }
-    return Object.assign({}, o, { [key]: rules[key] });
-  }, {});
-}
 
 export default LooksPanel;

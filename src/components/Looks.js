@@ -6,17 +6,22 @@ import { RESIZE_EVENT, DEFINE_EVENT, DEFAULT_WIDTH, DEFAULT_MAX_WIDTH,
 export default class Looks extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = { width: DEFAULT_WIDTH, channel: addons.getChannel() };
+    this.state = {
+      width: this.props.width || DEFAULT_WIDTH,
+      channel: addons.getChannel(),
+    };
     this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
-    const { channel } = this.state;
+    const { channel, width } = this.state;
+    const { min, max, children } = this.props;
     channel.on(RESIZE_EVENT, this.handleResize);
     channel.emit(DEFINE_EVENT, {
-      min: DEFAULT_MIN_WIDTH,
-      max: DEFAULT_MAX_WIDTH,
-      looks: this.props.children.type.prototype.looks,
+      min: min || DEFAULT_MIN_WIDTH,
+      max: max || DEFAULT_MAX_WIDTH,
+      looks: children.type.prototype.looks,
+      width,
     });
   }
 
@@ -27,14 +32,18 @@ export default class Looks extends React.Component {
   handleResize(width) { this.setState({ width }); }
 
   render() {
+    const { width } = this.state;
     return (
       <div>
-        { React.cloneElement(this.props.children, { width: this.state.width }) }
+        { React.cloneElement(this.props.children, { width }) }
       </div>
     );
   }
 }
 
 Looks.propTypes = {
-  children: React.PropTypes.node,
+  children: React.PropTypes.node.isRequired,
+  min: React.PropTypes.number,
+  max: React.PropTypes.number,
+  width: React.PropTypes.number,
 };

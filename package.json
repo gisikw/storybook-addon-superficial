@@ -38,5 +38,8 @@
     "@kadira/storybook-addons": "^1.6.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
+  },
+  "dependencies": {
+    "superficial": "^0.1.3"
   }
 }
