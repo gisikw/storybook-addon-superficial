@@ -2976,9 +2976,9 @@ strip-json-comments@~1.0.1, strip-json-comments@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-1.0.4.tgz#1e15fbcac97d3ee99bf2d73b4c656b082bbafb91"
 
-superficial@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/superficial/-/superficial-0.1.3.tgz#bfd66065fa0e8e23cd33237b09a771df84abcae5"
+superficial@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/superficial/-/superficial-0.1.4.tgz#2ea4c16ad1fcf83ed49d7989ab1a26dd48af5cfd"
   dependencies:
     react "^15.4.1"
 

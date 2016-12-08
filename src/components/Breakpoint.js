@@ -17,9 +17,12 @@ export default function Breakpoint({ breakpoint, value, min, max }) {
   return <div title={title} style={style} />;
 }
 
+const numOrString = React.PropTypes.oneOfType([
+  React.PropTypes.string, React.PropTypes.number,
+]);
 Breakpoint.propTypes = {
-  breakpoint: React.PropTypes.string,
-  value: React.PropTypes.any,
-  min: React.PropTypes.number,
-  max: React.PropTypes.number,
+  breakpoint: numOrString,
+  value: numOrString,
+  min: numOrString,
+  max: numOrString,
 };

@@ -31,7 +31,7 @@ export default function LookSection({ looks, title, min, max }) {
 }
 
 LookSection.propTypes = {
-  looks: React.PropTypes.object,
+  looks: React.PropTypes.object.isRequired,
   title: React.PropTypes.string,
   min: React.PropTypes.number,
   max: React.PropTypes.number,

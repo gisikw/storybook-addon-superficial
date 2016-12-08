@@ -48,20 +48,29 @@ const styles = {
   }),
 };
 
-export default function StyledInput(args) {
+export default function StyledInput(props) {
   // The real slider doesn't overflow the rail,
   // so we need to compute a manual offset to correct for this drift
-  const leftPct = ((args.value - args.min) / (args.max - args.min)) * 100;
+  const leftPct = ((props.value - props.min) / (props.max - props.min)) * 100;
   const leftOffset = (BUTTON_WIDTH / 2) - ((leftPct / 100) * BUTTON_WIDTH);
   const left = `calc(${leftPct}% + ${leftOffset}px)`;
   const inputArgs =
-    Object.assign({ id: 'superficial-slider', type: 'range' }, args);
+    Object.assign({ id: 'superficial-slider', type: 'range' }, props);
 
   return (
     <div style={styles.container}>
       <style>{ STYLE }</style>
       <input {...inputArgs} />
-      <div style={styles.button({ left })}>{ args.value }</div>
+      <div style={styles.button({ left })}>{ props.value }</div>
     </div>
   );
 }
+
+const numOrString = React.PropTypes.oneOfType([
+  React.PropTypes.string, React.PropTypes.number,
+]).isRequired;
+StyledInput.propTypes = {
+  value: numOrString,
+  min: numOrString,
+  max: numOrString,
+};

@@ -20,7 +20,7 @@ export default function LookRule({ prop, value, min, max }) {
 }
 
 LookRule.propTypes = {
-  prop: React.PropTypes.string,
+  prop: React.PropTypes.string.isRequired,
   value: React.PropTypes.any,
   min: React.PropTypes.number,
   max: React.PropTypes.number,
