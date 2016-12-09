@@ -37,7 +37,7 @@ export default function LookBar({ prop, value, min, max }) {
 
 LookBar.propTypes = {
   prop: React.PropTypes.string,
-  value: React.PropTypes.object,
+  value: React.PropTypes.object.isRequired,
   min: React.PropTypes.number,
   max: React.PropTypes.number,
 };

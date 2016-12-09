@@ -67,7 +67,7 @@ LooksPanel.propTypes = {
   channel: React.PropTypes.shape({
     emit: React.PropTypes.func,
     on: React.PropTypes.func,
-  }),
+  }).isRequired,
 };
 
 export default LooksPanel;
