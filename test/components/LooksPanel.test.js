@@ -1,12 +1,16 @@
 import test from 'tape';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { MOUNT_EVENT } from '../../src/constants';
 import LooksPanel from '../../src/components/LooksPanel';
 
 test('LooksPanel assigns channel event args to state', (assert) => {
   let channelCallback;
   let state;
-  const channel = { emit() {}, on(_, cb) { channelCallback = cb; } };
+  const channel = {
+    emit() {},
+    on(name, cb) { if (name === MOUNT_EVENT) channelCallback = cb; },
+  };
   const wrapper = shallow(<LooksPanel channel={channel} />);
   wrapper.instance().setState = (args) => { state = args; };
   channelCallback('newState');

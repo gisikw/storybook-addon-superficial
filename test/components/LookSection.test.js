@@ -5,7 +5,7 @@ import LookSection from '../../src/components/LookSection';
 
 test('LookSection renders a LookRule for each property', (assert) => {
   const looks = { color: 'red', fontSize: '14px' };
-  const wrapper = shallow(<LookSection looks={looks} />);
+  const wrapper = shallow(<LookSection looks={looks} onChange={() => {}} />);
   assert.equal(wrapper.find('LookRule').length, 2);
   assert.end();
 });

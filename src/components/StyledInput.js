@@ -7,6 +7,7 @@ const STYLE = `
     height: ${BUTTON_WIDTH}px;
     overflow: hidden;
     cursor: pointer;
+    outline: none;
   }
   #superficial-slider,
   #superficial-slider::-webkit-slider-runnable-track,

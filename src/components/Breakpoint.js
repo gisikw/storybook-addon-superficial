@@ -1,20 +1,16 @@
 import React from 'react';
 
-export default function Breakpoint({ breakpoint, value, min, max }) {
-  const title = `${breakpoint}px: ${value}`;
+export default function Breakpoint({ breakpoint, min, max }) {
   const style = {
     position: 'absolute',
-    top: '50%',
-    marginTop: '-3px',
+    top: '3px',
     height: 6,
     width: 6,
     background: 'black',
     borderRadius: 6,
-    cursor: 'pointer',
     left: `${((breakpoint - min) / (max - min)) * 100}%`,
   };
-
-  return <div title={title} style={style} />;
+  return <div title={breakpoint} style={style} />;
 }
 
 const numOrString = React.PropTypes.oneOfType([
@@ -22,7 +18,6 @@ const numOrString = React.PropTypes.oneOfType([
 ]);
 Breakpoint.propTypes = {
   breakpoint: numOrString,
-  value: numOrString,
   min: numOrString,
   max: numOrString,
 };
