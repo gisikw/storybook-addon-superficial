@@ -3,7 +3,7 @@ coverage
 node_modules
 npm-debug.log
 /components
-index.js
-register.js
-constants.js
-colors.js
+/index.js
+/register.js
+/constants.js
+/colors.js
