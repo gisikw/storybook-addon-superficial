@@ -1,38 +1,38 @@
 import React from 'react';
+import superficial from 'superficial';
 import { expandLookRules } from 'superficial/interpolate';
 import LookRule from './LookRule';
+import { BUTTON_LOOK } from '../constants';
 
-const ADD_RULE_ENABLED = false;
-const styles = {
-  title: { textDecoration: 'underline' },
-  addRule: { color: '#999', cursor: 'pointer' },
-  label: {
-    textTransform: 'uppercase',
-    fontSize: '10px',
-    color: '#444',
-    fontFamily: 'Arial',
-    fontWeight: '600',
-    borderBottom: '10px solid transparent',
-  },
-};
-
-export default class LookSection extends React.Component {
+class LookSection extends React.Component {
   constructor(...args) {
     super(...args);
     this.onChange = this.onChange.bind(this);
+    this.addRule = this.addRule.bind(this);
   }
 
   onChange(prop, value) {
     const { title, looks, onChange } = this.props;
-    onChange(title, Object.assign({}, looks, { [prop]: value }));
+    if (value.to) {
+      const newLooks = Object.assign({}, looks, { [value.to]: looks[prop] });
+      delete newLooks[prop];
+      onChange(title, newLooks);
+    } else {
+      onChange(title, Object.assign({}, looks, { [prop]: value }));
+    }
+  }
+
+  addRule() {
+    const { title, looks, onChange } = this.props;
+    onChange(title, Object.assign({}, looks, { '| edit |': '| value |' }));
   }
 
   render() {
     const { looks, title, min, max, width } = this.props;
     const rules = expandLookRules(looks);
     return (
-      <tbody style={styles.label}>
-        <tr><td style={styles.title}>{ title }</td></tr>
+      <tbody looks={this.looks.label}>
+        <tr><td looks={this.looks.title}>{ title }</td></tr>
         {
           Object.keys(rules).sort().map(prop =>
             <LookRule
@@ -44,7 +44,11 @@ export default class LookSection extends React.Component {
           )
         }
         <tr>
-          { ADD_RULE_ENABLED ? <td style={styles.addRule}>+ Add Rule</td> : '' }
+          <td looks={this.looks.addRule}>
+            <button looks={BUTTON_LOOK} onClick={this.addRule}>
+              + Add Rule
+            </button>
+          </td>
         </tr>
       </tbody>
     );
@@ -59,3 +63,18 @@ LookSection.propTypes = {
   min: React.PropTypes.number,
   max: React.PropTypes.number,
 };
+
+LookSection.looks = {
+  title: { textDecoration: 'underline' },
+  addRule: { color: '#999', cursor: 'pointer' },
+  label: {
+    textTransform: 'uppercase',
+    fontSize: '10px',
+    color: '#444',
+    fontFamily: 'Arial',
+    fontWeight: '600',
+    borderBottom: '10px solid transparent',
+  },
+};
+
+export default superficial(LookSection);

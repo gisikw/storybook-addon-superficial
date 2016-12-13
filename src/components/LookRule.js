@@ -1,72 +1,52 @@
 import React from 'react';
+import superficial from 'superficial';
 import LookBar from './LookBar';
+import StyledInput from './StyledInput';
+import { BUTTON_LOOK } from '../constants';
 
 const dasherize = word =>
   word.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
-const editableValue = value => (typeof value !== 'object'
-  ? value
-  : JSON.stringify(value)
-      .replace(/"([^"]+)":/g, '$1:')
-      .replace(',', ', ')
-      .replace(/[{}]/g, ''));
-
-const parseInput = value => (value.indexOf(':') === -1
-  ? value
-  : JSON.parse(`{${value.replace(/(\d+):/g, '"$1":')}}`));
-
-const styles = {
-  prop: { verticalAlign: 'top' },
-  value: {
-    cursor: 'pointer',
-    width: '100%',
-    textAlign: 'left',
-    background: 'none',
-    border: 0,
-    padding: 0,
-    font: 'inherit',
-    textTransform: 'uppercase',
-    color: '#444',
-  },
-  input: isObject => ({
-    fontSize: '10px',
-    height: '11px',
-    background: '#ddd',
-    width: '100%',
-    padding: `0 5px ${isObject ? 13 : 0}px`,
-    margin: 0,
-    border: 0,
-    outline: 0,
-  }),
-};
-
-const handleFocus = ({ target }) => target.select();
-
-export default class LookRule extends React.Component {
+class LookRule extends React.Component {
   constructor(...args) {
     super(...args);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.state = { editable: false };
+    this.handleValueClick = this.handleValueClick.bind(this);
+    this.handlePropClick = this.handlePropClick.bind(this);
+    this.handleValueChange = this.handleValueChange.bind(this);
+    this.handlePropChange = this.handlePropChange.bind(this);
+    this.state = { edit: false };
   }
 
-  handleBlur({ target }) {
-    const { onChange, prop } = this.props;
-    onChange(prop, parseInput(target.value));
-    this.setState({ editable: false });
+  handlePropClick() { this.setState({ edit: 'prop' }); }
+  handleValueClick() { this.setState({ edit: 'value' }); }
+  handlePropChange(value, didChange) {
+    if (didChange) this.props.onChange(this.props.prop, { to: value });
+    this.setState({ edit: false });
   }
-  handleClick() { this.setState({ editable: true }); }
+  handleValueChange(value, didChange) {
+    if (didChange) this.props.onChange(this.props.prop, value);
+    this.setState({ edit: false });
+  }
+
+  renderProp() {
+    if (this.state.edit === 'prop') {
+      return (
+        <StyledInput
+          defaultValue={dasherize(this.props.prop)}
+          onChange={this.handlePropChange}
+        />
+      );
+    }
+    return dasherize(this.props.prop);
+  }
 
   renderValue() {
     const { prop, value, min, max, width } = this.props;
-    if (this.state.editable) {
+    if (this.state.edit === 'value') {
       return (
-        <input
-          style={styles.input(typeof value === 'object')}
-          defaultValue={editableValue(value)}
-          onBlur={this.handleBlur}
-          onFocus={handleFocus}
-          autoFocus
+        <StyledInput
+          defaultValue={value}
+          onChange={this.handleValueChange}
         />
       );
     }
@@ -77,9 +57,16 @@ export default class LookRule extends React.Component {
   render() {
     return (
       <tr>
-        <td style={styles.prop}>{ dasherize(this.props.prop) }</td>
+        <td looks={this.looks.prop}>
+          <button looks={BUTTON_LOOK} onClick={this.handlePropClick}>
+            { this.renderProp() }
+          </button>
+        </td>
         <td>
-          <button style={styles.value} onClick={this.handleClick}>
+          <button
+            looks={[BUTTON_LOOK, this.looks.value]}
+            onClick={this.handleValueClick}
+          >
             { this.renderValue() }
           </button>
         </td>
@@ -96,3 +83,9 @@ LookRule.propTypes = {
   min: React.PropTypes.number,
   max: React.PropTypes.number,
 };
+
+LookRule.looks = {
+  value: { width: '100%', color: '#222' },
+};
+
+export default superficial(LookRule);

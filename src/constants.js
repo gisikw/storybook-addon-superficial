@@ -14,3 +14,15 @@ export const RESET_EVENT = 'gisikw/superficial/reset';
 export const DEFAULT_WIDTH = 400;
 export const DEFAULT_MAX_WIDTH = 1440;
 export const DEFAULT_MIN_WIDTH = 0;
+
+/* Shared Looks */
+export const BUTTON_LOOK = {
+  background: 'none',
+  border: 0,
+  padding: 0,
+  textAlign: 'left',
+  font: 'inherit',
+  cursor: 'pointer',
+  textTransform: 'inherit',
+  color: 'inherit',
+};

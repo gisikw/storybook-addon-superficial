@@ -1,6 +1,6 @@
 import React from 'react';
 import LookSection from './LookSection';
-import StyledInput from './StyledInput';
+import StyledRangeSlider from './StyledRangeSlider';
 import {
   RESIZE_EVENT, MOUNT_EVENT, UNMOUNT_EVENT, OVERRIDE_EVENT, RESET_EVENT,
   DEFAULT_WIDTH, DEFAULT_MAX_WIDTH, DEFAULT_MIN_WIDTH,
@@ -78,7 +78,7 @@ class LooksPanel extends React.Component {
             <tr>
               <td style={styles.leftCol}>WIDTH</td>
               <td style={styles.rightCol}>
-                <StyledInput {...inputArgs} />
+                <StyledRangeSlider {...inputArgs} />
               </td>
             </tr>
             <tr>
