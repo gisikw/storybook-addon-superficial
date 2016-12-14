@@ -3,7 +3,7 @@ import React from 'react';
 const editableValue = value => (typeof value !== 'object'
   ? value
   : JSON.stringify(value)
-      .replace(/"([^"]+)":/g, '$1:')
+      .replace(/"([^"]+)":/g, '$1: ')
       .replace(',', ', ')
       .replace(/[{}]/g, ''));
 
