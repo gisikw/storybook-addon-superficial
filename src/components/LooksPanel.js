@@ -10,6 +10,7 @@ const DEFAULT_STATE = {
   min: DEFAULT_MIN_WIDTH,
   max: DEFAULT_MAX_WIDTH,
   width: DEFAULT_WIDTH,
+  cleanLooks: {},
   looks: {},
 };
 
