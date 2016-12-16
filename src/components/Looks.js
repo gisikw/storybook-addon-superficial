@@ -27,7 +27,7 @@ export default class Looks extends React.Component {
     channel.emit(MOUNT_EVENT, {
       min: min || DEFAULT_MIN_WIDTH,
       max: max || DEFAULT_MAX_WIDTH,
-      looks: children.type.prototype.looks,
+      looks: children.type.looks,
       width,
     });
   }

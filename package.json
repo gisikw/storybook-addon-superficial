@@ -9,14 +9,18 @@
   "homepage": "https://github.com/gisikw/storybook-addon-superficial",
   "bugs": "https://github.com/gisikw/storybook-addon-superficial/issues",
   "scripts": {
-    "test": "babel-tape-runner 'test/**/*.js' | tap-min",
-    "test:coverage": "babel-tap --cov --coverage-report=lcov 'test/**/*.js'",
     "build": "babel src --presets babel-preset-es2015 --out-dir .",
+    "lint": "eslint src test",
     "prepublish": "npm run build",
-    "lint": "eslint src test"
+    "publish-storybook": "URL=`git config --get remote.origin.url`; build-storybook; (cd storybook-static && git init && git add . && git commit -m 'Deploy Storybook to GitHub Pages'a&& git push --force --quiet $URL master:gh-pages > /dev/null 2>&1); rm -rf storybook-static",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "test": "babel-tape-runner 'test/**/*.js' | tap-min",
+    "test:coverage": "babel-tap --cov --coverage-report=lcov 'test/**/*.js'"
   },
   "license": "MIT",
   "devDependencies": {
+    "@kadira/storybook": "^2.34.0",
+    "@kadira/storybook-addon-options": "^1.0.1",
     "@kadira/storybook-addons": "^1.6.1",
     "babel-cli": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
@@ -42,6 +46,6 @@
     "react-dom": "^15.4.1"
   },
   "dependencies": {
-    "superficial": "^0.1.6"
+    "superficial": "^0.2.1"
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import interpolate from 'superficial/interpolate';
+import { interpolate } from 'superficial';
 import Breakpoint from './Breakpoint';
 import colors from '../colors';
 

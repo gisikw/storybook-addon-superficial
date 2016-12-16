@@ -1,6 +1,5 @@
 import React from 'react';
-import superficial from 'superficial';
-import { expandLookRules } from 'superficial/interpolate';
+import superficial, { expandLookRules } from 'superficial';
 import LookRule from './LookRule';
 import { BUTTON_LOOK } from '../constants';
 
