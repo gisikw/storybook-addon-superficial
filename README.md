@@ -5,10 +5,9 @@
 
 # React Storybook Superficial Addon
 
-![React Storybook README addon](.storybook/screenshot.jpg?raw=true)
-
-
 A React Storybook addon for interacting with responsive Superficial looks.
+
+![React Storybook README addon][screen_url]
 
 ## Contributing
 
@@ -26,3 +25,4 @@ The library is available as open source under the terms of the [MIT License](htt
 [code_site]: https://codeclimate.com/github/gisikw/storybook-addon-superficial
 [npm_img]: https://img.shields.io/npm/v/storybook-addon-superficial.svg
 [npm_site]: https://www.npmjs.com/package/storybook-addon-superficial
+[screen_url]: .storybook/screenshot.jpg?raw=true
