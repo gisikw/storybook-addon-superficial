@@ -11,6 +11,7 @@ const DEFAULT_STATE = {
   max: DEFAULT_MAX_WIDTH,
   width: DEFAULT_WIDTH,
   cleanLooks: {},
+  active: false,
   looks: {},
 };
 
@@ -47,7 +48,8 @@ class LooksPanel extends React.Component {
     this.changeLook = this.changeLook.bind(this);
     this.reset = this.reset.bind(this);
     this.props.channel.on(MOUNT_EVENT, opts =>
-      this.setState(Object.assign({ cleanLooks: opts.looks }, opts)));
+      this.setState(Object.assign({ cleanLooks: opts.looks, active: true },
+                                  opts)));
     this.props.channel.on(UNMOUNT_EVENT, () => this.setState(DEFAULT_STATE));
     this.state = DEFAULT_STATE;
   }
@@ -70,8 +72,8 @@ class LooksPanel extends React.Component {
   }
 
   render() {
-    const { looks, min, max, width, dirty } = this.state;
-    if (!Object.keys(looks).length) return null;
+    const { looks, min, max, width, dirty, active } = this.state;
+    if (!active) return null;
     const inputArgs = { onChange: this.forceResize, value: width, min, max };
     return (
       <div style={styles.container}>
