@@ -11,33 +11,33 @@ class LookSection extends React.Component {
   }
 
   onChange(prop, value) {
-    const { title, looks, onChange } = this.props;
+    const { title, rules, onChange } = this.props;
     if (value.to) {
-      const newLooks = Object.assign({}, looks, { [value.to]: looks[prop] });
+      const newLooks = Object.assign({}, rules, { [value.to]: rules[prop] });
       delete newLooks[prop];
       onChange(title, newLooks);
     } else {
-      onChange(title, Object.assign({}, looks, { [prop]: value }));
+      onChange(title, Object.assign({}, rules, { [prop]: value }));
     }
   }
 
   addRule() {
-    const { title, looks, onChange } = this.props;
-    onChange(title, Object.assign({}, looks, { '| edit |': '| value |' }));
+    const { title, rules, onChange } = this.props;
+    onChange(title, Object.assign({}, rules, { '| edit |': '| value |' }));
   }
 
   render() {
-    const { looks, title, min, max, width } = this.props;
-    const rules = expandLookRules(looks);
+    const { rules, title, min, max, width } = this.props;
+    const expanded = expandLookRules(rules);
     return (
       <tbody looks={this.looks.label}>
         <tr><td looks={this.looks.title}>{ title }</td></tr>
         {
-          Object.keys(rules).sort().map(prop =>
+          Object.keys(expanded).sort().map(prop =>
             <LookRule
               key={prop}
               onChange={this.onChange}
-              value={rules[prop]}
+              value={expanded[prop]}
               {...{ prop, min, max, width }}
             />,
           )
@@ -55,7 +55,7 @@ class LookSection extends React.Component {
 }
 
 LookSection.propTypes = {
-  looks: React.PropTypes.object.isRequired,
+  rules: React.PropTypes.object.isRequired,
   onChange: React.PropTypes.func.isRequired,
   title: React.PropTypes.string,
   width: React.PropTypes.number,

@@ -4862,9 +4862,9 @@ style-loader@0.13.1:
   dependencies:
     loader-utils "^0.2.7"
 
-superficial@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/superficial/-/superficial-0.2.1.tgz#7069464d4d9774bb148a07e264ba316b59a5c5c3"
+superficial@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/superficial/-/superficial-0.3.0.tgz#0e50bab834d36a7f09d1ca9006d6e2bbcf486d54"
 
 supports-color@^0.2.0:
   version "0.2.0"

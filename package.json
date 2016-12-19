@@ -46,6 +46,6 @@
     "react-dom": "^15.4.1"
   },
   "dependencies": {
-    "superficial": "^0.2.1"
+    "superficial": "^0.3.0"
   }
 }

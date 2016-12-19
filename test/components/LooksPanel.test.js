@@ -2,72 +2,70 @@ import test from 'tape';
 import React from 'react';
 import { shallow } from 'enzyme';
 import {
-  MOUNT_EVENT, UNMOUNT_EVENT, OVERRIDE_EVENT, RESET_EVENT,
+  REGISTER_EVENT, UPDATE_EVENT, UNREGISTER_EVENT,
 } from '../../src/constants';
 import LooksPanel from '../../src/components/LooksPanel';
 
-test('LooksPanel assigns channel event args to state', (assert) => {
-  let channelCallback;
-  let state;
+test('LooksPanel updates state on receiving events', (assert) => {
+  assert.plan(3);
+  let wrapper;
   const channel = {
-    emit() {},
-    on(name, cb) { if (name === MOUNT_EVENT) channelCallback = cb; },
+    on(name, cb) {
+      switch (name) {
+        case REGISTER_EVENT:
+          setTimeout(() => {
+            cb({ registerCanary: 'test' });
+            assert.equal(wrapper.state().registerCanary, 'test');
+          });
+          break;
+        case UPDATE_EVENT:
+          setTimeout(() => {
+            cb({ updateCanary: 'test' });
+            assert.equal(wrapper.state().updateCanary, 'test');
+          });
+          break;
+        case UNREGISTER_EVENT:
+          setTimeout(() => {
+            cb();
+            assert.equal(wrapper.state().active, false);
+          });
+          break;
+        default:
+      }
+    },
   };
-  const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.instance().setState = (args) => { state = args; };
-  channelCallback({ foo: 'newState' });
-  assert.equal(state.foo, 'newState');
-  assert.end();
+  wrapper = shallow(<LooksPanel channel={channel} />);
 });
 
-test('LooksPanel renders a LookSection for each look', (assert) => {
-  const looks = { foo: {}, bar: {}, baz: {} };
+test('LooksPanel updates width on resize', (assert) => {
+  assert.plan(1);
   const channel = { emit() {}, on() {} };
   const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.setState({ looks, active: true });
-  assert.equal(wrapper.find('LookSection').length, 3);
-  assert.end();
+  wrapper.instance().update = ({ width }) => assert.equal(width, 30);
+  wrapper.instance().onResize({ target: { value: '30' } });
 });
 
-test('LooksPanel emits an event on forceResize', (assert) => {
-  let size;
-  const channel = { emit(_, arg) { size = arg; }, on() {} };
-  const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.instance().forceResize({ target: { value: 50 } });
-  assert.equal(size, 50);
-  assert.end();
-});
-
-test('LookPanel emits an override event on look change', (assert) => {
+test('LooksPanel updates override on look change', (assert) => {
   assert.plan(1);
-  const channel = {
-    emit: (name) => { if (name === OVERRIDE_EVENT) assert.pass(); },
-    on() {},
-  };
+  const channel = { emit() {}, on() {} };
   const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.instance().changeLook();
+  wrapper.instance().update = ({ override }) =>
+    assert.deepEqual(override, { foo: 5 });
+  wrapper.instance().onLookChange('foo', 5);
 });
 
-test('LookPanel emits a reset event on reset', (assert) => {
+test('LooksPanel updates override on reset', (assert) => {
   assert.plan(1);
-  const channel = {
-    emit: (name) => { if (name === RESET_EVENT) assert.pass(); },
-    on() {},
-  };
+  const channel = { emit() {}, on() {} };
   const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.instance().reset();
+  wrapper.instance().update = ({ override }) => assert.equal(override, null);
+  wrapper.instance().onReset();
 });
 
-test('LookPanel resets looks on channel umount', (assert) => {
-  let unmountCallback;
-  const channel = {
-    emit() {},
-    on(name, cb) { if (name === UNMOUNT_EVENT) unmountCallback = cb; },
-  };
+test('LooksPanel updates state and emits an event on update', (assert) => {
+  assert.plan(2);
+  const channel = { on() {}, emit(_, { foo }) { assert.equal(foo, 'test'); } };
   const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.setState({ looks: 'bad' });
-  assert.notDeepEqual(wrapper.state().looks, {});
-  unmountCallback();
-  assert.deepEqual(wrapper.state().looks, {});
-  assert.end();
+  wrapper.instance().update({ foo: 'test' });
+  assert.equal(wrapper.state().foo, 'test');
 });

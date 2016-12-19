@@ -75,6 +75,10 @@ class LookRule extends React.Component {
   }
 }
 
+LookRule.looks = {
+  value: { width: '100%', color: '#222' },
+};
+
 LookRule.propTypes = {
   prop: React.PropTypes.string.isRequired,
   onChange: React.PropTypes.func.isRequired,
@@ -82,10 +86,6 @@ LookRule.propTypes = {
   width: React.PropTypes.number,
   min: React.PropTypes.number,
   max: React.PropTypes.number,
-};
-
-LookRule.looks = {
-  value: { width: '100%', color: '#222' },
 };
 
 export default superficial(LookRule);

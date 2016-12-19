@@ -1,17 +1,23 @@
 import React from 'react';
+import superficial from 'superficial';
 
-export default function Breakpoint({ breakpoint, min, max }) {
+function Breakpoint({ breakpoint, min, max }, looks) {
   const style = {
+    left: `${((breakpoint - min) / (max - min)) * 100}%`,
+  };
+  return <div title={breakpoint} looks={looks.main} style={style} />;
+}
+
+Breakpoint.looks = {
+  main: {
     position: 'absolute',
     top: '3px',
     height: 6,
     width: 6,
     background: 'black',
     borderRadius: 6,
-    left: `${((breakpoint - min) / (max - min)) * 100}%`,
-  };
-  return <div title={breakpoint} style={style} />;
-}
+  },
+};
 
 const numOrString = React.PropTypes.oneOfType([
   React.PropTypes.string, React.PropTypes.number,
@@ -21,3 +27,5 @@ Breakpoint.propTypes = {
   min: numOrString,
   max: numOrString,
 };
+
+export default superficial(Breakpoint);
