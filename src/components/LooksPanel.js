@@ -46,7 +46,8 @@ class LooksPanel extends React.Component {
     this.forceResize = this.forceResize.bind(this);
     this.changeLook = this.changeLook.bind(this);
     this.reset = this.reset.bind(this);
-    this.props.channel.on(MOUNT_EVENT, opts => this.setState(opts));
+    this.props.channel.on(MOUNT_EVENT, opts =>
+      this.setState(Object.assign({ cleanLooks: opts.looks }, opts)));
     this.props.channel.on(UNMOUNT_EVENT, () => this.setState(DEFAULT_STATE));
     this.state = DEFAULT_STATE;
   }
@@ -54,7 +55,7 @@ class LooksPanel extends React.Component {
   changeLook(name, rules) {
     const looks = Object.assign({}, this.state.looks, { [name]: rules });
     this.props.channel.emit(OVERRIDE_EVENT, looks);
-    this.setState({ dirty: true, cleanLooks: this.state.looks, looks });
+    this.setState({ dirty: true, looks });
   }
 
   forceResize({ target }) {

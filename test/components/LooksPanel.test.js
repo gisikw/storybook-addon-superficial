@@ -15,8 +15,8 @@ test('LooksPanel assigns channel event args to state', (assert) => {
   };
   const wrapper = shallow(<LooksPanel channel={channel} />);
   wrapper.instance().setState = (args) => { state = args; };
-  channelCallback('newState');
-  assert.equal(state, 'newState');
+  channelCallback({ foo: 'newState' });
+  assert.equal(state.foo, 'newState');
   assert.end();
 });
 
