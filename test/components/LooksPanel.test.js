@@ -24,7 +24,7 @@ test('LooksPanel renders a LookSection for each look', (assert) => {
   const looks = { foo: {}, bar: {}, baz: {} };
   const channel = { emit() {}, on() {} };
   const wrapper = shallow(<LooksPanel channel={channel} />);
-  wrapper.setState({ looks });
+  wrapper.setState({ looks, active: true });
   assert.equal(wrapper.find('LookSection').length, 3);
   assert.end();
 });
