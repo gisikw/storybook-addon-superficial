@@ -28,12 +28,14 @@ export default function LookBar({ prop, value, min, max, width }) {
   const labelPct = Math.max(Math.min(pctOf(width, min, max), maxPct), minPct);
   return (
     <div style={styles.container}>
-      <div style={styles.line(minPct, maxPct, prop)} />
+      <div
+        style={styles.line(Math.max(minPct, 0), Math.min(maxPct, 100), prop)}
+      />
       <div style={styles.label(labelPct)}>
         { interpolate({ val: value })(width).val }
       </div>
       {
-        breakpoints.map(breakpoint =>
+        breakpoints.filter(b => b <= max && b >= min).map(breakpoint =>
           <Breakpoint
             key={breakpoint}
             {...{ breakpoint, min, max }}
