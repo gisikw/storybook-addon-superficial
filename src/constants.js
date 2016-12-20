@@ -4,11 +4,10 @@ export const PANEL_NAME = 'gisikw/superficial/panel';
 export const PANEL_TITLE = 'Looks';
 
 /* Storybook Channel Events */
-export const MOUNT_EVENT = 'gisikw/superficial/mount';
-export const UNMOUNT_EVENT = 'gisikw/superficial/unmount';
-export const RESIZE_EVENT = 'gisikw/superficial/resize';
+export const REGISTER_EVENT = 'gisikw/superficial/register';
+export const UNREGISTER_EVENT = 'gisikw/superficial/unregister';
 export const OVERRIDE_EVENT = 'gisikw/superficial/override';
-export const RESET_EVENT = 'gisikw/superficial/reset';
+export const UPDATE_EVENT = 'gisikw/superficial/update';
 
 /* Default Dimensions */
 export const DEFAULT_WIDTH = 400;

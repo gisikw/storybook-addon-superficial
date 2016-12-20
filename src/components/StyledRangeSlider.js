@@ -1,7 +1,8 @@
 import React from 'react';
+import superficial from 'superficial';
 
 const BUTTON_WIDTH = 30;
-const STYLE = `
+const STYLE_TAG = `
   #superficial-slider {
     width: 100%;
     height: ${BUTTON_WIDTH}px;
@@ -28,12 +29,28 @@ const STYLE = `
   }
 `;
 
-const styles = {
+function StyledRangeSlider(props, looks) {
+  // The real slider doesn't overflow the rail,
+  // so we need to compute a manual offset to correct for this drift
+  const leftPct = ((props.value - props.min) / (props.max - props.min)) * 100;
+  const leftOffset = (BUTTON_WIDTH / 2) - ((leftPct / 100) * BUTTON_WIDTH);
+  const left = `calc(${leftPct}% + ${leftOffset}px)`;
+  const inputArgs =
+    Object.assign({ id: 'superficial-slider', type: 'range' }, props);
+  return (
+    <div looks={looks.container}>
+      <style>{ STYLE_TAG }</style>
+      <input {...inputArgs} />
+      <div looks={looks.button} style={{ left }}>{ props.value }</div>
+    </div>
+  );
+}
+
+StyledRangeSlider.looks = {
   container: { position: 'relative' },
-  button: ({ left }) => ({
+  button: {
     position: 'absolute',
     top: 9,
-    left,
     fontSize: 10,
     width: BUTTON_WIDTH,
     height: 15,
@@ -46,26 +63,8 @@ const styles = {
     border: '1px solid #fff',
     textAlign: 'center',
     borderRadius: BUTTON_WIDTH,
-  }),
+  },
 };
-
-export default function StyledRangeSlider(props) {
-  // The real slider doesn't overflow the rail,
-  // so we need to compute a manual offset to correct for this drift
-  const leftPct = ((props.value - props.min) / (props.max - props.min)) * 100;
-  const leftOffset = (BUTTON_WIDTH / 2) - ((leftPct / 100) * BUTTON_WIDTH);
-  const left = `calc(${leftPct}% + ${leftOffset}px)`;
-  const inputArgs =
-    Object.assign({ id: 'superficial-slider', type: 'range' }, props);
-
-  return (
-    <div style={styles.container}>
-      <style>{ STYLE }</style>
-      <input {...inputArgs} />
-      <div style={styles.button({ left })}>{ props.value }</div>
-    </div>
-  );
-}
 
 const numOrString = React.PropTypes.oneOfType([
   React.PropTypes.string, React.PropTypes.number,
@@ -75,3 +74,5 @@ StyledRangeSlider.propTypes = {
   min: numOrString,
   max: numOrString,
 };
+
+export default superficial(StyledRangeSlider);
