@@ -14,7 +14,8 @@ class LooksPanel extends React.Component {
 
     this.props.channel.on(REGISTER_EVENT, opts =>
       this.setState(Object.assign({ active: true, override: null }, opts)));
-    this.props.channel.on(UPDATE_EVENT, opts => this.setState(opts));
+    this.props.channel.on(UPDATE_EVENT, ({ looks }) =>
+      this.setState({ looks }));
     this.props.channel.on(UNREGISTER_EVENT, () =>
       this.setState({ active: false }));
 

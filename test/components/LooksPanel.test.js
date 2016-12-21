@@ -20,8 +20,8 @@ test('LooksPanel updates state on receiving events', (assert) => {
           break;
         case UPDATE_EVENT:
           setTimeout(() => {
-            cb({ updateCanary: 'test' });
-            assert.equal(wrapper.state().updateCanary, 'test');
+            cb({ looks: 'test' });
+            assert.equal(wrapper.state().looks, 'test');
           });
           break;
         case UNREGISTER_EVENT:
