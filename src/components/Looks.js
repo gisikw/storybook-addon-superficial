@@ -33,7 +33,7 @@ export default class Looks extends React.Component {
     return {
       min: this.props.min || DEFAULT_MIN_WIDTH,
       max: this.props.max || DEFAULT_MAX_WIDTH,
-      looks: this.props.children.type.looks,
+      looks: this.props.children.type.looks || {},
       width: this.state.width,
     };
   }
