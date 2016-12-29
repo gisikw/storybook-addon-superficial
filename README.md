@@ -56,7 +56,7 @@ You can also specify the minimum, maximum, and starting width values on the
 ```js
 storiesOf('MyComponent', module)
   .add('Default', () => (
-    <Looks min={200} max={800} width{600}>
+    <Looks min={200} max={800} width={600}>
       <MyComponent />
     </Looks>
   ));
