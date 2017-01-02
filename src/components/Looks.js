@@ -42,17 +42,18 @@ export default class Looks extends React.Component {
 
   render() {
     const { width, override } = this.state;
+    const props =
+      Object.assign({}, this.props.props, { width, __looksOverride: override });
     return (<div>
-      {React.cloneElement(
-        this.props.children, { width, __looksOverride: override },
-      )}
+      {React.cloneElement(this.props.children, props)}
     </div>);
   }
 }
 
 Looks.propTypes = {
   children: React.PropTypes.node.isRequired,
-  min: React.PropTypes.number,
   max: React.PropTypes.number,
+  min: React.PropTypes.number,
+  props: React.PropTypes.object,
   width: React.PropTypes.number,
 };
